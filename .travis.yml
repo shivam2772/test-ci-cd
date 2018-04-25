@@ -6,5 +6,6 @@ script:
   - docker-compose up --build -d
 deploy:
   - provider: heroku
-  - api_key: 2ebaff57-ccc7-4ebd-8a6e-5a35aede655a
+  - api_key: 
+    - secure: 2ebaff57-ccc7-4ebd-8a6e-5a35aede655a
   - app: cicd
