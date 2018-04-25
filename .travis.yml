@@ -1,11 +1,13 @@
 language: node_js
 node_js:
-  - "9.5.0"
-script: 
-  - npm run lint && npm run test
-  - docker-compose up --build -d
+- 9.5.0
+script:
+- npm run lint && npm run test
+- docker-compose up --build -d
 deploy:
-  - provider: heroku
-  - api_key: 
-    - secure: 2ebaff57-ccc7-4ebd-8a6e-5a35aede655a
-  - app: cicd
+- provider: heroku
+- api_key:
+- app: cicd
+env:
+  global:
+    secure: novRtHb/TcXrbYINQc7q/YFX9sHyXnTFtWAD9E3iwQaKxdyW9cfekalXYgO+1k5MeMnqbBNUnABtMMtJrsF8qzg9MTeoBHEVdQdx0zfhg16vr40KDFop3PWoHIWy7KdAybIHkFrTPaaCojFH7t4dB4ESxchBkP1ZIj8t091Bdeh/pmK1wvWVWisz0a6K3rEuuH28ZCRxloX/177FA5EbWFUWMqWuYXxFL6fv+IuL03+t+5O3c9b8eE+XJJYpFu56o6QG30yM/t1EBQCa9iII3KrOzWZdPExtqEkz99VsdAJybY8M3nsLFBPuY+GvV85lCtv/DtVXzEO7SLQH1MCKbM74GfzDU+jshxR9ZFdIJo39xglAbxYzwVWcTgNldcJFfZcyTJFvjNLP+IFgJCsq9KgdC6oBkbgTkgv9OrGv+umaisluWnv83olTjeBbCA9RGd/zkpFywKahW9RBaJ2E1+H/tLo2f/nc3m9t3yVPwa803iE1EUicFVRA01r1PUR2P6fNP9VXyUaqKK1RwIQEb97dW/srS1r8QvmTjQw4t7sorh5vynoimuPi3QsJXqtsHo/Fam+EeSrYa4HZQT5Tl0wymZAviIMKmxxotFnMXLvZj/8sEM4YP7Ga8V0wOZc456OJ0aW5cZlW++SP/xPKocaNC0sZOTVQO1OrXIAnAA4=
