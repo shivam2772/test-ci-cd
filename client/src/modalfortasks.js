@@ -5,7 +5,7 @@ import _ from 'lodash';
 class Mods extends Component {
     render() {
         return (
-            <Modal style={{margin:'auto',marginTop:'auto'}} trigger={<List.Item>{this.props.title}</List.Item>}>
+            <Modal style={{ margin: 'auto', marginTop: 'auto' }} trigger={<List.Item>{this.props.title}</List.Item>}>
                 <Modal.Header>Profile Picture</Modal.Header>
                 <Modal.Content scrolling>
                     <Modal.Description>
