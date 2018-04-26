@@ -1,21 +1,38 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { Header, Icon, Segment} from 'semantic-ui-react';
+import { Button, Card, Image } from 'semantic-ui-react'
 import './App.css';
+import TrelloCards from './trellocards';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
-}
+        <div>
+          <Segment>
+            <Header as='h2' icon textAlign='center'>
+              <Icon name='users' circular />
+                TRELLO
+            </Header>
+            <Header as='h3' textAlign='right'>
+              <Icon.Group size='large'>
+                <Icon name='plus' />
+              </Icon.Group>
+              <Icon.Group size='large'>
+                <Icon name='info circle' />
+              </Icon.Group>
+              <Icon.Group size='large'>
+                <Icon name='bell outline' />
+              </Icon.Group>
+            </Header>
+          </Segment>
+          <TrelloCards />
+        </div>
 
-export default App;
+
+        </div>
+        );
+      }
+    }
+
+    export default App;
