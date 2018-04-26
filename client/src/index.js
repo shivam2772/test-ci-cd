@@ -1,28 +1,8 @@
-import $ from 'jquery';
-import getCollectionController from './offersController';
-import searchDataController from './searchDataController';
-import myFavourites from './collectionController';
-import { cityId, searchBtn, contentArea, contentTitle, API_KEY, searchQry, homeNav } from './my-keys';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import registerServiceWorker from './registerServiceWorker';
 
-$(() => {
-  getCollectionController(null, cityId, contentArea, API_KEY, contentTitle);
-
-  return false;
-});
-
-$('.button-collapse').bind('click', (event) => {
-  event.preventDefault();
-});
-
-searchBtn.bind('click', () => {
-  searchDataController(contentArea, API_KEY, searchQry);
-});
-
-
-homeNav.bind('click', (event) => {
-  getCollectionController(event, cityId, contentArea, API_KEY, contentTitle);
-});
-
-$('#list-nav').bind('click', (event) => {
-  myFavourites(event);
-});
+ReactDOM.render(<App />, document.getElementById('root'));
+registerServiceWorker();
