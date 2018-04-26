@@ -36,7 +36,7 @@
     "serve:client": "cd client && npm start",
     "serve:server": "node ./server/bin/www",
     "start": "nodejs ./server/bin/www",
-    "lint": "cd client && eslint src/index.js",
+    "lint": "eslint client/src/*.js",
     "test": "cd client && mocha --compilers js:babel-register"
   },
   "repository": {
