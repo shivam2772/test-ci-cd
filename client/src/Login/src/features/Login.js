@@ -2,11 +2,11 @@ import React from "react";
 //import {FontIcon, RaisedButton} from "material-ui";
 import {loginWithGoogle} from "../helpers/auth";
 import {firebaseAuth} from "../config/constants";
-import { Button ,Icon } from 'semantic-ui-react'
+import { Header, Button ,Icon, Segment } from 'semantic-ui-react'
 
 const firebaseAuthKey = "firebaseAuthInProgress";
 const appTokenKey = "appToken";
-
+const square = { width: 300, height: 300 }
 export default class Login extends React.Component {
 
     constructor(props) {
@@ -58,21 +58,27 @@ export default class Login extends React.Component {
     }
 }
 
-const iconStyles = {
-    color: "#ffffff"
-};
+
 const LoginPage = ({handleGoogleLogin}) => (
-    <div>
+  <div >
+      <div style={{position:'fixed', top:'25%', left:'30%'}}>
+        <Segment circular style={square}>
+        <Header as='h2' icon textAlign='center' style={{height:80, marginTop:-5}}>
+          <Icon name='users' circular />
+            TRELLO
+        </Header>
+      </Segment>
+      </div>
+    <div style={{position:'fixed', top:'25%', right:'30%'}}>
+      <Segment circular style={square}>
         <h1>Login</h1>
         <div>
           <Button color='google plus' onClick={handleGoogleLogin}>
-<Icon name='google plus' /> Google Plus
-</Button>
-
-
-
-
+            <Icon name='google plus' /> Google Plus
+          </Button>
         </div>
+      </Segment>
     </div>
+  </div>
 );
 const SplashScreen = () => (<p>Loading...</p>)
