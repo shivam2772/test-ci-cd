@@ -19,9 +19,9 @@ const Root = () => (
 <div>
         <Router history={customHistory}>
             <div>
-
                 <Route path="/login" component={Login}/>
-                <Route path="/app/home" component={Home}/>
+                <Route exact path="/app/home" component={Home}/>
+                <Route exact path="/Tasks" component={Tasks}/>
                 <Redirect from="/" to="/Login"/>
             </div>
         </Router>

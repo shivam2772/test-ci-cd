@@ -7,8 +7,38 @@ import { Form, TextArea } from 'semantic-ui-react';
 import { Modal } from 'semantic-ui-react';
 import firebasedb from './firebase/firebase';
 class TrelloCards extends Component {
+    state = {
+        open: false, title: [
+            {
+                cname: 'Aayush',
+                tname: ['This is Aayush','This is Nema','This is Abhi1nema2','This is NGhosh'],
+                descp: "Aayush wants to add you to the group best friends"
+            },
+            {
+                cname: 'Abhishek',
+                tname: ['This is AAayush','This is ANema','This is AAbhi1nema2','This is ANGhosh'],
+                descp: "Abhishek wants to add you to the group best friends"
+            },
+            {
+                cname: 'Nirmalya',
+                tname: ['This is BAayush','This is BNema','This is BAbhi1nema2','This is BNGhosh'],
+                descp: "Nirmalya wants to add you to the group best friends"
+            },
+            {
+                cname: 'Yuvraj',
+                tname: ['This is CAayush','This is CNema','This is CAbhi1nema2','This is CNGhosh'],
+                descp: `Yuvraj wants to add you to the group best friends`
+            },
+            {
+                cname: 'Aradhika',
+                tname: ['This is Aradhika','This is Arvind','This is ZUZU','This is CNema','This is CAbhi1nema2','This is CNGhosh'],
+                descp: `Aradhika wants to add you to the group nigga friends`
+            }
+        ],
+    }
+    show = () => this.setState({ open: true })
+    close = () => this.setState({ open: false })
     componentDidMount() {
-        // Initialize Firebase
         var toprint = "";
         var fireBaseBoardsRef = firebasedb.child("/user/" + "vdhulappanavar").on('value', function (snapshot) {
             console.log(snapshot.val())
@@ -20,33 +50,37 @@ class TrelloCards extends Component {
             console.log(users);
         });
     }
+    handleClick = () => {
+        console.log("I clicked u")
+    };
 
     render() {
+        const { open } = this.state;
         return (
             <React.Fragment>
-                <Card.Group style={{display:'flex', justifyContent:'center'}}>
-                    <Card style={{ margin: 35 }}>
+                <Card.Group style={{ display: 'flex', justifyContent: 'center' }}>
+                {this.state.title.map((p,index)=>(
+                    <Card style={{ margin: 35 }} onClick={this.handleClick}>
                         <Card.Content extra>
                             <Card.Header>
-                                Card 1
+                                {p.cname}
     </Card.Header>
                             <Card.Meta>
                                 Date: 12/08/3518
     </Card.Meta>
                             <Card.Description>
-                                Steve wants to add you to the group <strong>best friends</strong>
+                                {p.descp}
                             </Card.Description>
                         </Card.Content>
                         <Card.Content>
                             <Segment inverted>
                                 <List divided inverted relaxed>
-
-                                    <Mods title="Task1" />
-
+                                    {p.tname.map((o,i)=>(<Mods title={p.tname[i]} />))} 
                                 </List>
                             </Segment>
                         </Card.Content>
-                        <Modal style={{ margin: 'auto', marginTop: 'auto' }} trigger={<Button primary>Add</Button>}>
+                        <Button primary onClick={this.show}>Add</Button>
+                        <Modal style={{ margin: 'auto', marginTop: 'auto' }} open={open} onClose={this.close}>
                             <Modal.Header>Add more tasks</Modal.Header>
                             <Modal.Content scrolling>
                                 <Modal.Description>
@@ -58,12 +92,12 @@ class TrelloCards extends Component {
                                 </Modal.Description>
                             </Modal.Content>
                             <Modal.Actions>
-                                <Button primary>
+                                <Button primary onClick={this.close}>
                                     Proceed <Icon name='right chevron' />
                                 </Button>
                             </Modal.Actions>
                         </Modal>
-                    </Card>
+                    </Card>))}
                 </Card.Group>
             </React.Fragment>
         );
