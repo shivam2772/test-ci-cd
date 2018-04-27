@@ -75,8 +75,7 @@ class TrelloCards extends Component {
                             <Segment inverted>
                                 <List divided inverted relaxed>
                                     {p.tname.map((o,i)=>(<Mods title={p.tname[i]} />))} 
-                                </List>
-                            </Segment>
+                                </List>                            </Segment>
                         </Card.Content>
                         <Button primary onClick={this.show}>Add</Button>
                         <Modal style={{ margin: 'auto', marginTop: 'auto' }} open={open} onClose={this.close}>
@@ -102,5 +101,6 @@ class TrelloCards extends Component {
         );
     }
 }
+
 
 export default TrelloCards;
