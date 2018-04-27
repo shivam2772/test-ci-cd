@@ -7,6 +7,7 @@ import createBrowserHistory from "history/createBrowserHistory";
 import Login from "./Login/src/features/Login";
 import 'semantic-ui-css/semantic.min.css';
 import Home from "./App";
+import Tasks from './ayush/App';
 
 
 
@@ -21,6 +22,7 @@ const Root = () => (
 
                 <Route path="/login" component={Login}/>
                 <Route path="/app/home" component={Home}/>
+                <Route path="/Boards" component={Tasks}/>
                 <Redirect from="/" to="/login"/>
             </div>
         </Router>

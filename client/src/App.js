@@ -24,7 +24,7 @@ class App extends Component {
       data.boards.map(boardId => {
         firebasedb.child('/boards/'+boardId).on('value', (snapshot1) =>{
           let boardData = snapshot1.val()
-          console.log(boardData)
+          console.log("abc",boardData)
           let temp = this.state.boards ||  []
 
 
@@ -37,6 +37,27 @@ class App extends Component {
     })
   }
 
+  // updateState=()=>{
+  //   firebasedb.child("/users/"+"aradhikanigam").on('value', (snapshot) => {
+  //     let data = snapshot.val()
+  //     this.setState({userData : data})
+  //     console.log(data)
+  //     data.boards.map(boardId => {
+  //       firebasedb.child('/boards/'+boardId).on('value', (snapshot1) =>{
+  //         let boardData = snapshot1.val()
+  //         console.log(boardData)
+  //         let temp = this.state.boards ||  []
+
+
+  //         temp.push(boardData)
+  //         this.setState({
+  //           boards : temp
+  //         })
+  //       })
+  //     })
+  //   })
+  // }
+
 addBoard = ()=>{
   console.log("addBoard")
   let self = this
@@ -44,16 +65,22 @@ addBoard = ()=>{
   console.log(uniquId);
   let tryid = firebasedb.child('/boards').push({"name" : this.state.boardname})
   console.log(tryid.path.pieces_[1]);
-  let user = firebasedb.child('users')
+  //let user = firebasedb.child('users')
+  console.log("yooo",this.state.userData)
   let temp = this.state.userData
-  temp.boards.push(tryid.path.pieces_[1])
-  console.log(temp);
+  console.log("ys",tryid.path.pieces_[1])
+   temp.boards.push(tryid.path.pieces_[1])
+  //console.log(temp);
   firebasedb.child('users/aradhikanigam').set(temp)
+  // this.setState({
+  //   userData: null,
+  //   boards: []
+  // })
   this.setState({
     userData: temp,
     boards: temp.boards
   })
-
+  console.log("state",this.state.userData)
 }
   handleChange =(e)=>{
     this.setState({boardname:e.target.value})
@@ -96,7 +123,7 @@ addBoard = ()=>{
             </Header>
           </Segment>
           <Card.Group style={{margin: 'auto'}}>
-         {boards? boards.map((items, index) => (
+         {this.state.boards ? boards.map((items, index) => (
           <Boards key={index} />
         ))   : ""}
          {/* <Boards boardname={this.state.boardname} date="12/12/2012" /> */}

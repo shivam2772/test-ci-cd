@@ -1,10 +1,13 @@
 import firebase from 'firebase'
 
-const config = {
-  apiKey: "AIzaSyCba3Oq0fWB5iVe-cpRvPb12Ii4TPaC9vQ",
-    authDomain: "stackroutetrello.firebaseapp.com",
-    databaseURL: "https://stackroutetrello.firebaseio.com",
-};
+var config = {
+   apiKey: "AIzaSyAU-EONivUfWWNmzNYXJqeUwZ5vtiJsWrc",
+   authDomain: "newagent-147ab.firebaseapp.com",
+   databaseURL: "https://newagent-147ab.firebaseio.com",
+   projectId: "newagent-147ab",
+   storageBucket: "newagent-147ab.appspot.com",
+   messagingSenderId: "938795729422"
+ };
 
 firebase.initializeApp(config);
 
