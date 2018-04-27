@@ -22,8 +22,7 @@ const Root = () => (
 
                 <Route path="/login" component={Login}/>
                 <Route path="/app/home" component={Home}/>
-                <Route path="/Boards" component={Tasks}/>
-                <Redirect from="/" to="/login"/>
+                <Redirect from="/" to="/Login"/>
             </div>
         </Router>
 </div>
