@@ -36,7 +36,7 @@ export default class Login extends React.Component {
 
         firebaseAuth().onAuthStateChanged(user => {
             if (user) {
-                console.log("User signed in: ", JSON.stringify(user));
+                console.log("User signed in: ", JSON.stringify(user.displayName));
 
                 localStorage.removeItem(firebaseAuthKey);
 

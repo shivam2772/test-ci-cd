@@ -3,7 +3,11 @@ import { Header, Icon, Segment} from 'semantic-ui-react';
 import { Button, Card, Image, Modal, List, Input } from 'semantic-ui-react'
 import './App.css';
 import Boards from './Boards';
-import firebasedb from './firebase/firebase'
+import firebasedb from './firebase/firebase';
+import  * as firebase from 'firebase';
+import {logout} from "./Login/src/helpers/auth";
+
+const appTokenKey = "appToken";
 const uuid = require("uuidv4")
 class App extends Component {
 
@@ -15,7 +19,17 @@ class App extends Component {
         boards : [],
         boardname: ""
     };
+this.handleLogout = this.handleLogout.bind(this);
   }
+
+  handleLogout() {
+      logout().then(function () {
+          localStorage.removeItem(appTokenKey);
+          this.props.history.push("/login");
+          console.log("user signed out from firebase");
+      }.bind(this));
+}
+
   componentDidMount(){
     firebasedb.child("/users/"+"aradhikanigam").on('value', (snapshot) => {
       let data = snapshot.val()
@@ -88,6 +102,7 @@ addBoard = ()=>{
 
   }
   render() {
+
     const { boards } = this.state;
     return (
       <div className="App">
@@ -114,12 +129,16 @@ addBoard = ()=>{
                     </Button>
                 </Modal.Actions>
             </Modal>
+
               <Icon.Group size='large'>
                 <Icon name='info circle' />
               </Icon.Group>
               <Icon.Group size='large'>
                 <Icon name='bell outline' />
               </Icon.Group>
+              <Button color='google plus' onClick={this.handleLogout}>
+    <Icon name='google plus' /> Signout
+    </Button>
             </Header>
           </Segment>
           <Card.Group style={{margin: 'auto'}}>
