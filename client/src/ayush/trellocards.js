@@ -96,10 +96,10 @@ class TrelloCards extends Component {
                         </Card.Content>
                         <Card.Content>
                             <Segment inverted>
-                                <List divided inverted relaxed>
+                                {/* <List divided inverted relaxed> */}
                                 <SortableList items={this.state.title.tname} onSortEnd={this.onSortEnd} />
                                     {/* {p.tname.map((o,i)=>(<Mods title={p.tname[i]} />))}  */}
-                                </List>
+                                {/* </List> */}
                             </Segment>
                         </Card.Content>
                         <Button primary onClick={this.show}>Add</Button>

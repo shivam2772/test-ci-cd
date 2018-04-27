@@ -27,12 +27,15 @@ class App extends Component {
     super(props)
 
     this.state = {
-      userData : null,
-        boards : [],
-        boardname: ""
+      boards: [],
+      boardName: "",
+
     };
-          this.handleLogout = this.handleLogout.bind(this);
+      this.handleLogout = this.handleLogout.bind(this);
   }
+
+
+
   handleLogout() {
       logout().then(function () {
           localStorage.removeItem(appTokenKey);
@@ -41,52 +44,38 @@ class App extends Component {
       }.bind(this));
 
   }
-  componentDidMount(){
-    firebasedb.child("/users/"+"aradhikanigam").on('value', (snapshot) => {
+  componentWillMount(){
+    firebasedb.child("/users/"+"aradhikanigam"+"/boards").on('value', (snapshot) => {
       let data = snapshot.val()
-      this.setState({userData : data})
-      console.log(data)
-      data.boards.map(boardId => {
-        firebasedb.child('/boards/'+boardId).on('value', (snapshot1) =>{
-          let boardData = snapshot1.val()
-          console.log(boardData)
-          let temp = this.state.boards ||  []
+      let arr = Object.keys(data).map(function(k) { return data[k] });
 
 
-          temp.push(boardData)
-          this.setState({
-            boards : temp
-          })
-        })
+      this.setState({
+        boards:arr,
+
       })
+
+      console.log("data",this.state.boards)
+
     })
   }
 
   addBoard = ()=>{
-    console.log("addBoard")
-    let self = this
-    let uniquId = uuid()
-    console.log(uniquId);
-    let tryid = firebasedb.child('/boards').push({"name" : this.state.boardname})
-    console.log(tryid.path.pieces_[1]);
-    //let user = firebasedb.child('users')
-    console.log("yooo",this.state.userData)
-    let temp = this.state.userData
-    console.log("ys",tryid.path.pieces_[1])
-     temp.boards.push(tryid.path.pieces_[1])
-    //console.log(temp);
-    firebasedb.child('users/aradhikanigam').set(temp)
-    // this.setState({
-    //   userData: null,
-    //   boards: []
-    // })
-    this.setState({
-      userData: temp,
-      boards: temp.boards
-    })
-    console.log("state",this.state.userData)
-  }
 
+    let tryid = firebasedb.child('/boards').push({"boardName":this.state.boardName})
+    console.log(tryid.path.pieces_[1])
+    let dataId = tryid.path.pieces_[1];
+    firebasedb.child("/users/"+"aradhikanigam"+"/boards/").push({
+      "boardId": dataId,
+      "boardName":this.state.boardName
+    });
+
+  }
+    handleChange =(e)=>{
+      this.setState({boardName:e.target.value})
+      console.log(this.state);
+
+    }
 
 
 //  onSortEnd = ({oldIndex, newIndex}) => {
@@ -140,11 +129,12 @@ class App extends Component {
 </Button>
             </Header>
           </Segment>
-          
+            <Card.Group style={{margin: 'auto'}}>
             {/* <SortableList items={this.state.boards} onSortEnd={this.onSortEnd} /> */}
-         {boards? boards.map((items, index) => (
-          <Boards key={index} />
-        ))   : ""}
+            {this.state.boards ? this.state.boards.map((items,index) => (
+             <Boards key={index}  date="12/12/2012" data = {items} />
+           ))   : ""}
+              </Card.Group>
         </div>
 
 
