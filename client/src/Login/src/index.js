@@ -6,8 +6,8 @@ import injectTapEventPlugin from "react-tap-event-plugin";
 import {Redirect, Route, Router} from "react-router";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import createBrowserHistory from "history/createBrowserHistory";
-import Login from "./Login/src/features/Login";
-import Home from "./App";
+import Login from "./features/Login";
+import Home from "./../../App";
 
 
 const muiTheme = getMuiTheme({
