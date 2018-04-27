@@ -1,5 +1,5 @@
 import React from "react";
-import {RaisedButton} from "material-ui";
+import { Button } from 'semantic-ui-react'
 import {logout} from "../helpers/auth";
 
 const appTokenKey = "appToken"; // also duplicated in Login.js
@@ -29,15 +29,11 @@ export default class Home extends React.Component {
             <div>
                 <h1>Home</h1>
                 <h3>Welcome</h3>
-               
-
                 <div>
-                    <RaisedButton
-                        backgroundColor="#a4c639"
-                        labelColor="#ffffff"
-                        label="Sign Out"
-                        onTouchTap={this.handleLogout}
-                    />
+                  <Button color='google plus' onClick={this.handleLogout}>
+  <Icon name='google plus' /> Google Plus
+</Button>
+
                 </div>
             </div>
         );

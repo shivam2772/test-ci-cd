@@ -1,35 +1,30 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import registerServiceWorker from "./registerServiceWorker";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import injectTapEventPlugin from "react-tap-event-plugin";
 import {Redirect, Route, Router} from "react-router";
-import getMuiTheme from "material-ui/styles/getMuiTheme";
 import createBrowserHistory from "history/createBrowserHistory";
 import Login from "./Login/src/features/Login";
+import 'semantic-ui-css/semantic.min.css';
 import Home from "./App";
 
 
-const muiTheme = getMuiTheme({
-    appBar: {
-        color: "#37517E",
-        height: 50
-    },
-});
+
 
 injectTapEventPlugin();
 
 const customHistory = createBrowserHistory();
 const Root = () => (
-    <MuiThemeProvider muiTheme={muiTheme}>
+<div>
         <Router history={customHistory}>
             <div>
+
                 <Route path="/login" component={Login}/>
                 <Route path="/app/home" component={Home}/>
                 <Redirect from="/" to="/login"/>
             </div>
         </Router>
-    </MuiThemeProvider>
+</div>
 );
 ReactDOM.render(<Root />, document.getElementById('root'));
 

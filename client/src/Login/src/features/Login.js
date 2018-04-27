@@ -1,8 +1,8 @@
 import React from "react";
-import {FontIcon, RaisedButton} from "material-ui";
+//import {FontIcon, RaisedButton} from "material-ui";
 import {loginWithGoogle} from "../helpers/auth";
 import {firebaseAuth} from "../config/constants";
-
+import { Button ,Icon } from 'semantic-ui-react'
 
 const firebaseAuthKey = "firebaseAuthInProgress";
 const appTokenKey = "appToken";
@@ -65,13 +65,13 @@ const LoginPage = ({handleGoogleLogin}) => (
     <div>
         <h1>Login</h1>
         <div>
-            <RaisedButton
-                label="Sign in with Google"
-                labelColor={"#ffffff"}
-                backgroundColor="#dd4b39"
-                icon={<FontIcon className="fa fa-google" style={iconStyles}/>}
-                onClick={handleGoogleLogin}
-            />
+          <Button color='google plus' onClick={handleGoogleLogin}>
+<Icon name='google plus' /> Google Plus
+</Button>
+
+
+
+
         </div>
     </div>
 );
