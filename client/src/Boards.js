@@ -31,7 +31,7 @@ class Boards extends Component {
                             <Card.Content >
                                 <Card.Header>
 
-                                    {this.props.boardname}
+                                    {this.props.data.boardName}
                                 </Card.Header>
                                 <Card.Meta>
                                     Date: {this.props.date}
