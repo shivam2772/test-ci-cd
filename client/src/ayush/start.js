@@ -2,9 +2,14 @@ import React, { Component } from 'react';
 import { Header, Icon, Segment } from 'semantic-ui-react';
 import { Button, Card, Image, Modal, List, Popup } from 'semantic-ui-react'
 import './App.css';
+import { Form, TextArea } from 'semantic-ui-react';
 import TrelloCards from './trellocards';
 class Start extends Component {
+    state = { open: false }
+    show = () => this.setState({ open: true })
+    close = () => this.setState({ open: false })
     render() {
+        const { open } = this.state;
         return (
             <div>
                 <Segment>
@@ -13,19 +18,22 @@ class Start extends Component {
                         TRELLO
             </Header>
                     <Header as='h3' textAlign='right'>
-                        <Modal style={{ margin: 'auto', marginTop: 'auto' }} trigger={<Icon.Group size='large'>
+                        <Icon.Group size='large' onClick={this.show}>
                             <Icon name='plus' />
-                        </Icon.Group>}>
+                        </Icon.Group>
+                        <Modal style={{ margin: 'auto', marginTop: 'auto' }} open={open} onClose={this.close}>
                             <Modal.Header>Add a new Board</Modal.Header>
                             <Modal.Content scrolling>
                                 <Modal.Description>
                                     <Header>Title of the Board</Header>
                                     <p>Note: You cant change the title of this board once created</p>
-                                    <input />
+                                    <Form>
+                                        <TextArea autoHeight placeholder='Add a Task' />
+                                    </Form>
                                 </Modal.Description>
                             </Modal.Content>
                             <Modal.Actions>
-                                <Button primary>
+                                <Button primary onClick={this.close}>
                                     Proceed <Icon name='right chevron' />
                                 </Button>
                             </Modal.Actions>
