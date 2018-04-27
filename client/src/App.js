@@ -8,20 +8,18 @@ import firebasedb from './firebase/firebase';
 import {logout} from "./Login/src/helpers/auth";
 const appTokenKey = "appToken";
 const uuid = require("uuidv4")
-//var SortableItem = sortable(Boards);
-const SortableItem = SortableElement(Boards);
-// {boards? boards.map((items, index) => (
-//  <Boards key={index} />
-// ))   : ""}
-const SortableList = SortableContainer(({items}) => {
-  return (
-    <ul>
-      {items ? items.map((value, index) => (
-        <SortableItem key={`item-${index}`} index={index} value={value} />
-      )): ""}
-    </ul>
-  );
-});
+
+// const SortableItem = SortableElement(Boards);
+
+// const SortableList = SortableContainer(({items}) => {
+//   return (
+//     <ul>
+//       {items ? items.map((value, index) => (
+//         <SortableItem key={`item-${index}`} index={index} value={value} />
+//       )): ""}
+//     </ul>
+//   );
+// });
 
 class App extends Component {
 
@@ -91,11 +89,11 @@ class App extends Component {
 
 
 
- onSortEnd = ({oldIndex, newIndex}) => {
-    this.setState({
-      boards: arrayMove(this.state.boards, oldIndex, newIndex),
-    });
-  };
+//  onSortEnd = ({oldIndex, newIndex}) => {
+//     this.setState({
+//       boards: arrayMove(this.state.boards, oldIndex, newIndex),
+//     });
+//   };
 
   render() {
     const { boards } = this.state;
@@ -135,21 +133,11 @@ class App extends Component {
 </Button>
             </Header>
           </Segment>
-          {/* <Card.Group style={{margin: 'auto'}}> */}
-            <SortableList items={this.state.boards} onSortEnd={this.onSortEnd} />
-         {/* {boards? boards.map((items, index) => (
-          <Boards key={index} />
-        ))   : ""} */}
-         {/* <Boards boardname={this.state.boardname} date="12/12/2012" /> */}
-
-{/*
+          
+            {/* <SortableList items={this.state.boards} onSortEnd={this.onSortEnd} /> */}
          {boards? boards.map((items, index) => (
-          <SortableItem key={index}
-          onSortItems={this.onSortItems}
-          items={items}
-          sortId={index}>{items}</SortableItem>
-        ))   : ""} */}
-       {/* </Card.Group> */}
+          <Boards key={index} />
+        ))   : ""}
         </div>
 
 
