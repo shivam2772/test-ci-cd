@@ -2,8 +2,10 @@ import React from "react";
 //import {FontIcon, RaisedButton} from "material-ui";
 import {loginWithGoogle} from "../helpers/auth";
 import {firebaseAuth} from "../config/constants";
-import { Header, Button ,Icon, Segment } from 'semantic-ui-react'
-import { Message} from 'semantic-ui-react'
+import { Header, Button ,Icon, Segment ,Message} from 'semantic-ui-react';
+
+
+const displayName ="displayName";
 const firebaseAuthKey = "firebaseAuthInProgress";
 const appTokenKey = "appToken";
 const square = { width: 300, height: 300 }
@@ -37,9 +39,9 @@ export default class Login extends React.Component {
         firebaseAuth().onAuthStateChanged(user => {
             if (user) {
                 console.log("User signed in: ", JSON.stringify(user.displayName));
-
+                localStorage.setItem(displayName,user.displayName);
                 localStorage.removeItem(firebaseAuthKey);
-
+                localStorage.setItem("photoURL",user.photoURL);
                 // here you could authenticate with you web server to get the
                 // application specific token so that you do not have to
                 // authenticate with firebase every time a user logs in
@@ -81,10 +83,10 @@ const LoginPage = ({handleGoogleLogin}) => (
     </div>
   </div>
 );
-const SplashScreen = () => (  <Message icon>
+const SplashScreen = () => (<p><Message icon>
     <Icon name='circle notched' loading />
     <Message.Content>
       <Message.Header>Just one second</Message.Header>
       We are fetching that content for you.
     </Message.Content>
-  </Message>)
+  </Message></p>)
