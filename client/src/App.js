@@ -105,16 +105,16 @@ class App extends Component {
       <div className="App">
         <div>
           <Segment>
-            <Header as='h4' icon textAlign='center' style={{height:30, marginTop:-5}}>
+            <Header as='h4' icon textAlign='center' style={{height:20, marginTop:-5}}>
 
               <Icon name='users' circular />
                 TRELLO
             </Header>
-            <Header as='h4'>
+            <Header as='h3' style={{height:20, marginTop:-5}}>
    <Image circular src={localStorage.getItem("photoURL")} />
    {' '}{localStorage.getItem("displayName")}
  </Header>
-            <Header as='h3' textAlign='right'>
+            <Header as='h4' textAlign='right' style={{height:30, marginTop:-5}}>
             <Modal style={{margin:'auto',marginTop:'auto'}} trigger={<Icon.Group size='large'>
                 <Icon name='plus' />
               </Icon.Group>}>
