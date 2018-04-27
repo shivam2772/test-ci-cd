@@ -5,23 +5,7 @@ import Mods from './modalfortasks';
 import React, { Component } from 'react';
 import { Form, TextArea } from 'semantic-ui-react';
 import { Modal } from 'semantic-ui-react';
-import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
 import firebasedb from './firebase/firebase';
-
-
-const SortableItem = SortableElement(Mods);
-
-const SortableList = SortableContainer(({items}) => {
-  return (
-    <ul>
-      {items ? items.map((value, index) => (
-        <SortableItem key={`item-${index}`} index={index} value={value} />
-      )): ""}
-    </ul>
-  );
-});
-
-
 class TrelloCards extends Component {
     state = {
         open: false, title: [
@@ -69,13 +53,6 @@ class TrelloCards extends Component {
     handleClick = () => {
         console.log("I clicked u")
     };
-
- onSortEnd = ({oldIndex, newIndex}) => {
-    this.setState({
-      tname : arrayMove(this.state.title.tname, oldIndex, newIndex),
-    });
-  };
-
     render() {
         const { open } = this.state;
         return (
@@ -97,8 +74,7 @@ class TrelloCards extends Component {
                         <Card.Content>
                             <Segment inverted>
                                 <List divided inverted relaxed>
-                                <SortableList items={this.state.title.tname} onSortEnd={this.onSortEnd} />
-                                    {/* {p.tname.map((o,i)=>(<Mods title={p.tname[i]} />))}  */}
+                                    {p.tname.map((o,i)=>(<Mods title={p.tname[i]} />))} 
                                 </List>
                             </Segment>
                         </Card.Content>
