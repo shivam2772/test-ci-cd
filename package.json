@@ -37,7 +37,7 @@
   },
   "scripts": {
     "clean": "rm -rf dist && mkdir dist",
-    "build": "cd client && npm run build",
+    "build": "cd client && npm install && npm run build",
     "dev": "cd client && webpack-dev-server",
     "serve:client": "cd client && npm start",
     "serve:server": "node ./server/bin/www",

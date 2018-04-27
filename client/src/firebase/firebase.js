@@ -1,13 +1,13 @@
 import * as firebase from 'firebase';
 var config = {
-    apiKey: "AIzaSyAU-EONivUfWWNmzNYXJqeUwZ5vtiJsWrc",
-    authDomain: "newagent-147ab.firebaseapp.com",
-    databaseURL: "https://newagent-147ab.firebaseio.com",
-    projectId: "newagent-147ab",
-    storageBucket: "newagent-147ab.appspot.com",
-    messagingSenderId: "938795729422"
-};
+   apiKey: "AIzaSyB7jlKj4cckL8UcFCHe0lHBmFl4gWcIFgk",
+   authDomain: "trell-16996.firebaseapp.com",
+   databaseURL: "https://trell-16996.firebaseio.com",
+   projectId: "trell-16996",
+   storageBucket: "trell-16996.appspot.com",
+   messagingSenderId: "638681303111"
+ };
 if (!firebase.apps.length)
-    firebase.initializeApp(config);
+   firebase.initializeApp(config);
 const firebasedb = firebase.database().ref();
 export default firebasedb;
