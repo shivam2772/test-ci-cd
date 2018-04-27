@@ -2,13 +2,27 @@ import React, { Component } from 'react';
 import { Header, Icon, Segment} from 'semantic-ui-react';
 import { Button, Card, Image, Modal, List, Input } from 'semantic-ui-react'
 import './App.css';
+import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
 import Boards from './Boards';
 import firebasedb from './firebase/firebase';
-import  * as firebase from 'firebase';
 import {logout} from "./Login/src/helpers/auth";
-
 const appTokenKey = "appToken";
 const uuid = require("uuidv4")
+//var SortableItem = sortable(Boards);
+const SortableItem = SortableElement(Boards);
+// {boards? boards.map((items, index) => (
+//  <Boards key={index} />
+// ))   : ""}
+const SortableList = SortableContainer(({items}) => {
+  return (
+    <ul>
+      {items ? items.map((value, index) => (
+        <SortableItem key={`item-${index}`} index={index} value={value} />
+      )): ""}
+    </ul>
+  );
+});
+
 class App extends Component {
 
   constructor(props) {
@@ -19,17 +33,16 @@ class App extends Component {
         boards : [],
         boardname: ""
     };
-this.handleLogout = this.handleLogout.bind(this);
+          this.handleLogout = this.handleLogout.bind(this);
   }
-
   handleLogout() {
       logout().then(function () {
           localStorage.removeItem(appTokenKey);
           this.props.history.push("/login");
           console.log("user signed out from firebase");
       }.bind(this));
-}
 
+  }
   componentDidMount(){
     firebasedb.child("/users/"+"aradhikanigam").on('value', (snapshot) => {
       let data = snapshot.val()
@@ -38,7 +51,7 @@ this.handleLogout = this.handleLogout.bind(this);
       data.boards.map(boardId => {
         firebasedb.child('/boards/'+boardId).on('value', (snapshot1) =>{
           let boardData = snapshot1.val()
-          console.log("abc",boardData)
+          console.log(boardData)
           let temp = this.state.boards ||  []
 
 
@@ -51,58 +64,40 @@ this.handleLogout = this.handleLogout.bind(this);
     })
   }
 
-  // updateState=()=>{
-  //   firebasedb.child("/users/"+"aradhikanigam").on('value', (snapshot) => {
-  //     let data = snapshot.val()
-  //     this.setState({userData : data})
-  //     console.log(data)
-  //     data.boards.map(boardId => {
-  //       firebasedb.child('/boards/'+boardId).on('value', (snapshot1) =>{
-  //         let boardData = snapshot1.val()
-  //         console.log(boardData)
-  //         let temp = this.state.boards ||  []
-
-
-  //         temp.push(boardData)
-  //         this.setState({
-  //           boards : temp
-  //         })
-  //       })
-  //     })
-  //   })
-  // }
-
-addBoard = ()=>{
-  console.log("addBoard")
-  let self = this
-  let uniquId = uuid()
-  console.log(uniquId);
-  let tryid = firebasedb.child('/boards').push({"name" : this.state.boardname})
-  console.log(tryid.path.pieces_[1]);
-  //let user = firebasedb.child('users')
-  console.log("yooo",this.state.userData)
-  let temp = this.state.userData
-  console.log("ys",tryid.path.pieces_[1])
-   temp.boards.push(tryid.path.pieces_[1])
-  //console.log(temp);
-  firebasedb.child('users/aradhikanigam').set(temp)
-  // this.setState({
-  //   userData: null,
-  //   boards: []
-  // })
-  this.setState({
-    userData: temp,
-    boards: temp.boards
-  })
-  console.log("state",this.state.userData)
-}
-  handleChange =(e)=>{
-    this.setState({boardname:e.target.value})
-    console.log(this.state);
-
+  addBoard = ()=>{
+    console.log("addBoard")
+    let self = this
+    let uniquId = uuid()
+    console.log(uniquId);
+    let tryid = firebasedb.child('/boards').push({"name" : this.state.boardname})
+    console.log(tryid.path.pieces_[1]);
+    //let user = firebasedb.child('users')
+    console.log("yooo",this.state.userData)
+    let temp = this.state.userData
+    console.log("ys",tryid.path.pieces_[1])
+     temp.boards.push(tryid.path.pieces_[1])
+    //console.log(temp);
+    firebasedb.child('users/aradhikanigam').set(temp)
+    // this.setState({
+    //   userData: null,
+    //   boards: []
+    // })
+    this.setState({
+      userData: temp,
+      boards: temp.boards
+    })
+    console.log("state",this.state.userData)
   }
-  render() {
 
+
+
+ onSortEnd = ({oldIndex, newIndex}) => {
+    this.setState({
+      boards: arrayMove(this.state.boards, oldIndex, newIndex),
+    });
+  };
+
+  render() {
     const { boards } = this.state;
     return (
       <div className="App">
@@ -129,24 +124,32 @@ addBoard = ()=>{
                     </Button>
                 </Modal.Actions>
             </Modal>
-
               <Icon.Group size='large'>
                 <Icon name='info circle' />
               </Icon.Group>
               <Icon.Group size='large'>
                 <Icon name='bell outline' />
               </Icon.Group>
-              <Button color='google plus' onClick={this.handleLogout}>
-    <Icon name='google plus' /> Signout
-    </Button>
+              <Button color='black' onClick={this.handleLogout}>
+<Icon name='sign out' /> Sign Out
+</Button>
             </Header>
           </Segment>
-          <Card.Group style={{margin: 'auto'}}>
-         {this.state.boards ? boards.map((items, index) => (
+          {/* <Card.Group style={{margin: 'auto'}}> */}
+            <SortableList items={this.state.boards} onSortEnd={this.onSortEnd} />
+         {/* {boards? boards.map((items, index) => (
           <Boards key={index} />
-        ))   : ""}
+        ))   : ""} */}
          {/* <Boards boardname={this.state.boardname} date="12/12/2012" /> */}
-       </Card.Group>
+
+{/*
+         {boards? boards.map((items, index) => (
+          <SortableItem key={index}
+          onSortItems={this.onSortItems}
+          items={items}
+          sortId={index}>{items}</SortableItem>
+        ))   : ""} */}
+       {/* </Card.Group> */}
         </div>
 
 
