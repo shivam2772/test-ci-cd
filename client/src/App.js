@@ -7,19 +7,8 @@ import Boards from './Boards';
 import firebasedb from './firebase/firebase';
 import {logout} from "./Login/src/helpers/auth";
 const appTokenKey = "appToken";
-const uuid = require("uuidv4")
 
-// const SortableItem = SortableElement(Boards);
-
-// const SortableList = SortableContainer(({items}) => {
-//   return (
-//     <ul>
-//       {items ? items.map((value, index) => (
-//         <SortableItem key={`item-${index}`} index={index} value={value} />
-//       )): ""}
-//     </ul>
-//   );
-// });
+const userNameId = localStorage.getItem("emailInfo");
 
 class App extends Component {
 
@@ -29,13 +18,16 @@ class App extends Component {
     this.state = {
       boards: [],
       boardName: "",
+      open: false
 
     };
+    
+
       this.handleLogout = this.handleLogout.bind(this);
   }
 
-
-
+  show = () => this.setState({ open: true })
+    close = () => this.setState({ open: false })
   handleLogout() {
       logout().then(function () {
           localStorage.removeItem(appTokenKey);
@@ -45,48 +37,45 @@ class App extends Component {
 
   }
   componentWillMount(){
-    firebasedb.child("/users/"+"aradhikanigam"+"/boards").on('value', (snapshot) => {
+    firebasedb.child("/users/"+userNameId+"/boards").on('value', (snapshot) => {
       let data = snapshot.val()
-      let arr = Object.keys(data).map(function(k) { return data[k] });
-
-
-      this.setState({
-        boards:arr,
-
-      })
-
-      console.log("data",this.state.boards)
-
+      if(data != null){
+        let arr = Object.keys(data).map(function(k) { return data[k] });
+        this.setState({
+          boards:arr,
+        })
+      }
     })
   }
 
   addBoard = ()=>{
+    this.close();
+    const date = new Date();
+    const d = date.getDate();
+    const m = date.getMonth();
+    const y = date.getFullYear();
+    const time = `${d}/${m}/${y}`;
 
-    let tryid = firebasedb.child('/boards').push({"boardName":this.state.boardName})
-    console.log(tryid.path.pieces_[1])
+    let tryid = firebasedb.child('/boards').push({
+      "boardName":this.state.boardName,
+      "createdBy":localStorage.getItem("displayName"),
+      "members":[],
+      "createdOn":time
+    })
     let dataId = tryid.path.pieces_[1];
-    firebasedb.child("/users/"+"aradhikanigam"+"/boards/").push({
+
+    firebasedb.child("/users/"+userNameId+"/boards/").push({
       "boardId": dataId,
-      "boardName":this.state.boardName
+      "boardName":this.state.boardName,
+      "createdBy":localStorage.getItem("displayName")
     });
 
   }
     handleChange =(e)=>{
       this.setState({boardName:e.target.value})
-      console.log(this.state);
-
     }
 
-
-//  onSortEnd = ({oldIndex, newIndex}) => {
-//     this.setState({
-//       boards: arrayMove(this.state.boards, oldIndex, newIndex),
-//     });
-//   };
-
   render() {
-    console.log("hi");
-    console.log(localStorage.getItem("displayName"));
     const { boards } = this.state;
     return (
       <div className="App">
@@ -101,8 +90,10 @@ class App extends Component {
    <Image circular src={localStorage.getItem("photoURL")} />
    {' '}{localStorage.getItem("displayName")}
  </Header>
+
+
             <Header as='h4' textAlign='right' style={{height:30, marginTop:-5}}>
-            <Modal style={{margin:'auto',marginTop:'auto'}} trigger={<Icon.Group size='large'>
+            <Modal style={{margin:'auto',marginTop:'auto'}} open= {this.state.open} trigger={<Icon.Group size='large' onClick={this.show}>
                 <Icon name='plus' />
               </Icon.Group>}>
                 <Modal.Header>Add a new Board</Modal.Header>
@@ -113,7 +104,7 @@ class App extends Component {
                     </Modal.Description>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button primary onClick={this.addBoard}>
+                    <Button primary onClick={this.addBoard} >
                         Proceed <Icon name='right chevron' />
                     </Button>
                 </Modal.Actions>
@@ -132,7 +123,7 @@ class App extends Component {
             <Card.Group style={{margin: 'auto'}}>
             {/* <SortableList items={this.state.boards} onSortEnd={this.onSortEnd} /> */}
             {this.state.boards ? this.state.boards.map((items,index) => (
-             <Boards key={index}  date="12/12/2012" data = {items} />
+             <Boards key={index} data = {items} history = {this.props.history} />
            ))   : ""}
               </Card.Group>
         </div>

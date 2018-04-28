@@ -5,7 +5,7 @@ import { Redirect, Route, Router } from "react-router";
 import React, { Component } from 'react';
 import { Form, TextArea } from 'semantic-ui-react';
 import { Modal } from 'semantic-ui-react';
-import Tasks from './ayush/App';
+import Tasks from './Tasks/App';
 import { Link } from "react-router-dom";
 
 class Boards extends Component {
@@ -17,7 +17,9 @@ class Boards extends Component {
 
     handleClick = (e) => {
         // Handle Click
-        console.log("handle click here")
+        // Redirected to Tasks of boards
+        localStorage.setItem("boardId",this.props.data.boardId)
+        this.props.history.push('/Tasks')
 
     }
 
@@ -26,22 +28,21 @@ class Boards extends Component {
         return (
             <React.Fragment>
                 <Card.Group>
-                    <Link to={'/Tasks'}>
-                        <Card style={{ margin: 20 }} onClick={this.handleClick}>
-                            <Card.Content >
-                                <Card.Header>
+                        <Card style={{ margin: 10 }} onClick={this.handleClick}>
+                            <Card.Header>
 
-                                    {this.props.data.boardName}
-                                </Card.Header>
+                            </Card.Header>
+                            <Card.Content >
+                                {this.props.data.boardName}
                                 <Card.Meta>
-                                    Date: {this.props.date}
+                                    Date: {this.props.data.createdOn}
                                 </Card.Meta>
                                 <Card.Description>
-                                    Steve wants to add you to the group <strong>best friends</strong>
+                                    Created By : {this.props.data.createdBy}
                                 </Card.Description>
                             </Card.Content >
+                           
                         </Card>
-                    </Link>
                 </Card.Group>
             </React.Fragment>
         );

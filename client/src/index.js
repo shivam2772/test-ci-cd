@@ -7,7 +7,7 @@ import createBrowserHistory from "history/createBrowserHistory";
 import Login from "./Login/src/features/Login";
 import 'semantic-ui-css/semantic.min.css';
 import Home from "./App";
-import Tasks from './ayush/App';
+import Tasks from './Tasks/App';
 
 
 
@@ -23,6 +23,7 @@ const Root = () => (
                 <Route exact path="/app/home" component={Home}/>
                 <Route exact path="/Tasks" component={Tasks}/>
                 <Redirect from="/" to="/Login"/>
+
             </div>
         </Router>
 </div>
@@ -30,3 +31,6 @@ const Root = () => (
 ReactDOM.render(<Root />, document.getElementById('root'));
 
 registerServiceWorker();
+
+
+

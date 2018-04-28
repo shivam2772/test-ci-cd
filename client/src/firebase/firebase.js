@@ -11,3 +11,5 @@ if (!firebase.apps.length)
    firebase.initializeApp(config);
 const firebasedb = firebase.database().ref();
 export default firebasedb;
+
+

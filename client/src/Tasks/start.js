@@ -22,13 +22,13 @@ class Start extends Component {
                             <Icon name='plus' />
                         </Icon.Group>
                         <Modal style={{ margin: 'auto', marginTop: 'auto' }} open={open} onClose={this.close}>
-                            <Modal.Header>Add a new Board</Modal.Header>
+                            <Modal.Header>Add a new Card</Modal.Header>
                             <Modal.Content scrolling>
                                 <Modal.Description>
-                                    <Header>Title of the Board</Header>
-                                    <p>Note: You cant change the title of this board once created</p>
+                                    <Header>Title of the Card</Header>
+                                    <p>Note: You cant change the title of this Card once created</p>
                                     <Form>
-                                        <TextArea autoHeight placeholder='Add a Task' />
+                                        <TextArea autoHeight placeholder='Add a Card' />
                                     </Form>
                                 </Modal.Description>
                             </Modal.Content>
