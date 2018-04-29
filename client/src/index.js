@@ -1,36 +1,19 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import registerServiceWorker from "./registerServiceWorker";
-import injectTapEventPlugin from "react-tap-event-plugin";
-import {Redirect, Route, Router} from "react-router";
-import createBrowserHistory from "history/createBrowserHistory";
-import Login from "./Login/src/features/Login";
-import 'semantic-ui-css/semantic.min.css';
-import Home from "./App";
-import Tasks from './Tasks/App';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import registerServiceWorker from './registerServiceWorker';
+import * as firebase from 'firebase';
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCI1co6DKDmFkm-b3lJUmfHfNJmZJ1IWkY",
+    authDomain: "slack-demo-2ad89.firebaseapp.com",
+    databaseURL: "https://slack-demo-2ad89.firebaseio.com",
+    projectId: "slack-demo-2ad89",
+    storageBucket: "slack-demo-2ad89.appspot.com",
+    messagingSenderId: "947277133194"
+  };
+  firebase.initializeApp(config);
 
-
-
-
-injectTapEventPlugin();
-
-const customHistory = createBrowserHistory();
-const Root = () => (
-<div>
-        <Router history={customHistory}>
-            <div>
-                <Route path="/login" component={Login}/>
-                <Route exact path="/app/home" component={Home}/>
-                <Route exact path="/Tasks" component={Tasks}/>
-                <Redirect from="/" to="/Login"/>
-
-            </div>
-        </Router>
-</div>
-);
-ReactDOM.render(<Root />, document.getElementById('root'));
-
+ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
-
-
-
