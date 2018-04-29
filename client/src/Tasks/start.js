@@ -4,10 +4,97 @@ import { Button, Card, Image, Modal, List, Popup } from 'semantic-ui-react'
 import './App.css';
 import { Form, TextArea } from 'semantic-ui-react';
 import TrelloCards from './trellocards';
+import firebasedb from './firebase/firebase';
+
+
+let newName = ""
+let newDesc = ""
 class Start extends Component {
-    state = { open: false }
+
+
+    constructor(props){
+        super(props);
+        this.state = {
+            open: false,
+            cardName: "",
+            cardDesc: "",
+            cards : [],
+            boardId: ""
+        };
+        this.handleChangeForName = this.handleChangeForName.bind(this);
+        this.handleChangeForDesc = this.handleChangeForDesc.bind(this);
+        this.close = this.close.bind(this);
+    }
+
+    
     show = () => this.setState({ open: true })
-    close = () => this.setState({ open: false })
+    
+
+    close() {
+
+        console.log("WTF",this.state)
+        const boardId = this.state.boardId;
+        const indexVal = this.state.cards? this.state.cards.length: 0;
+        // console.log(this.state.cards.length);
+        // const indexVal = this.state.leng;
+    
+
+        const date = new Date();
+        const d = date.getDate();
+        const m = date.getMonth();
+        const y = date.getFullYear();
+        const time = `${d}/${m}/${y}`;
+        firebasedb.child('boards/' + boardId + '/cards/' + indexVal).set({
+            createdOn: time,
+            description: newDesc,
+            name:newName,
+            taskName:[]
+
+        });
+
+        this.setState({ open: false });
+    }
+
+    componentDidMount(){
+
+        const boardId = localStorage.getItem("boardId");
+        console.log("Yo Data",boardId);
+
+        firebasedb.child("/boards/"+boardId+"/cards").on('value', (snapshot) => {
+            let data = snapshot.val()
+            if(data != null){
+                
+                // let arr = Object.keys(data).map(function(k) { return data[k] });
+
+                this.setState({
+                    cards:data,
+                    boardId: boardId,
+                })
+                console.log("Yo Datas",this.state);
+                localStorage.removeItem("boardId");
+            }
+            
+        })
+  }
+
+    // componentDidMount() {
+
+    //     // this.setState({
+    //     //     cardName: this.props.cardName,
+    //     //     cardDesc: this.props.cardDesc
+    //     // });
+    // }
+
+
+     handleChangeForName(event) {
+        newName = event.target.value
+        console.log(newName)
+    
+  }
+    handleChangeForDesc(event){
+        newDesc = event.target.value
+        console.log(newName)
+  }
     render() {
         const { open } = this.state;
         return (
@@ -28,7 +115,8 @@ class Start extends Component {
                                     <Header>Title of the Card</Header>
                                     <p>Note: You cant change the title of this Card once created</p>
                                     <Form>
-                                        <TextArea autoHeight placeholder='Add a Card' />
+                                        <TextArea autoHeight placeholder='Add a Card' onChange={this.handleChangeForName} />
+                                        <TextArea autoHeight  placeholder='Enter The Description' onChange={this.handleChangeForDesc} />
                                     </Form>
                                 </Modal.Description>
                             </Modal.Content>
@@ -50,7 +138,7 @@ class Start extends Component {
                         </Icon.Group>
                     </Header>
                 </Segment>
-                <TrelloCards />
+                <TrelloCards cards={this.state.cards} boardId={this.state.boardId} />
             </div>
         );
     }

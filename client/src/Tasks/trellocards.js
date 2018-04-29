@@ -19,8 +19,6 @@ class TrelloCards extends Component {
 
         this.state = {
             open:false,
-            cards : [],
-            boardId: "",
             cardIndex: null
 
         };
@@ -30,8 +28,8 @@ class TrelloCards extends Component {
     addTask(){
 
         const indexVal = this.state.cardIndex;
-        const taskData = this.state.cards[indexVal].taskName.length
-        const boardId = this.state.boardId;
+        const taskData = this.props.cards[indexVal].taskName ? this.props.cards[indexVal].taskName.length : 0
+        const boardId = this.props.boardId;
         firebase.database().ref().child('boards/' + boardId + '/cards/' + indexVal + '/taskName/' + taskData).set(valueLocal);
         this.setState({ open: false })
     }
@@ -44,26 +42,7 @@ class TrelloCards extends Component {
     };
 
 
-    componentDidMount(){
-
-        const boardId = localStorage.getItem("boardId");
-        console.log("Yo Data",boardId);
-
-        firebasedb.child("/boards/"+boardId+"/cards").on('value', (snapshot) => {
-            let data = snapshot.val()
-            if(data != null){
-                
-                // let arr = Object.keys(data).map(function(k) { return data[k] });
-                this.setState({
-                    cards:data,
-                    boardId: boardId,
-                })
-                console.log("Yo Datas",this.state.cards);
-                localStorage.removeItem("boardId");
-            }
-            
-        })
-  }
+    
     handleClick = (index) => {
         console.log("I clicked u",index)
     };
@@ -77,7 +56,7 @@ class TrelloCards extends Component {
         return (
             <React.Fragment>
                 <Card.Group style={{ display: 'flex', justifyContent: 'center' }} >
-                {this.state.cards.map((items,index)=>(
+                {this.props.cards.map((items,index)=>(
                     <Card style={{ margin: 35 } }>
                         <Card.Content extra>
                             <Card.Header>
@@ -93,7 +72,7 @@ class TrelloCards extends Component {
                         <Card.Content>
                             <Segment inverted>
                                 <List divided inverted relaxed>
-                                    {items.taskName.map((value)=>(<Mods title={value} />))} 
+                                    {items.taskName ? items.taskName.map((value)=>(<Mods title={value}/>)) : <div> No Tasks yet </div> } 
                                 </List>                            
                             </Segment>
                         </Card.Content>

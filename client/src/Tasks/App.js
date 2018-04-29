@@ -15,7 +15,7 @@ class Tasks extends Component {
 
 	componentWillMount(){
 
-		// error::::: here as getting board here
+		// error:::::  as getting board here
 		//:::::: MUST BE RESOLVED ::::::
 
 		const boardId = localStorage.getItem("boardId");

@@ -24,12 +24,14 @@ class App extends Component {
     
 
       this.handleLogout = this.handleLogout.bind(this);
+      this.close = this.close.bind(this);
   }
 
   show = () => this.setState({ open: true })
     close = () => this.setState({ open: false })
   handleLogout() {
       logout().then(function () {
+          localStorage.removeItem("emailInfo");
           localStorage.removeItem(appTokenKey);
           this.props.history.push("/login");
           console.log("user signed out from firebase");
